@@ -1,5 +1,21 @@
 <?php
 $arUrlRewrite=array (
+  5 => 
+  array (
+    'CONDITION' => '#^/about_the_service/news/#',
+    'RULE' => '',
+    'ID' => 'bitrix:news',
+    'PATH' => '/about_the_service/news/index.php',
+    'SORT' => 100,
+  ),
+  3 => 
+  array (
+    'CONDITION' => '#^/obyavleniya/#',
+    'RULE' => '',
+    'ID' => 'bitrix:news',
+    'PATH' => '/obyavleniya/index.php',
+    'SORT' => 100,
+  ),
   0 => 
   array (
     'CONDITION' => '#^/services/#',
@@ -16,7 +32,15 @@ $arUrlRewrite=array (
     'PATH' => '/products/index.php',
     'SORT' => 100,
   ),
-  2 => 
+  6 => 
+  array (
+    'CONDITION' => '#^/company/#',
+    'RULE' => '',
+    'ID' => 'bitrix:news',
+    'PATH' => '/about_the_service/мacancies/index.php',
+    'SORT' => 100,
+  ),
+  4 => 
   array (
     'CONDITION' => '#^/news/#',
     'RULE' => '',
