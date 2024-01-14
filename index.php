@@ -45,7 +45,7 @@ $arrFilter = array('PROPERTY_PREFERRED_DEAL' => '6');
 
 <?$APPLICATION->IncludeComponent(
 	"bitrix:news.list", 
-	".default", 
+	"template1", 
 	array(
 		"ACTIVE_DATE_FORMAT" => "d.m.Y",
 		"ADD_SECTIONS_CHAIN" => "Y",
@@ -59,7 +59,7 @@ $arrFilter = array('PROPERTY_PREFERRED_DEAL' => '6');
 		"CACHE_TIME" => "36000000",
 		"CACHE_TYPE" => "A",
 		"CHECK_DATES" => "Y",
-		"DETAIL_URL" => "",
+		"DETAIL_URL" => "#SITE_DIR#/obyavleniya/#ELEMENT_CODE#/",
 		"DISPLAY_BOTTOM_PAGER" => "Y",
 		"DISPLAY_DATE" => "Y",
 		"DISPLAY_NAME" => "Y",
@@ -79,7 +79,7 @@ $arrFilter = array('PROPERTY_PREFERRED_DEAL' => '6');
 		"MESSAGE_404" => "",
 		"NEWS_COUNT" => "20",
 		"PAGER_BASE_LINK_ENABLE" => "N",
-		"PAGER_DESC_NUMBERING" => "N",
+		"PAGER_DESC_NUMBERING" => "Y",
 		"PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
 		"PAGER_SHOW_ALL" => "N",
 		"PAGER_SHOW_ALWAYS" => "N",
@@ -89,7 +89,7 @@ $arrFilter = array('PROPERTY_PREFERRED_DEAL' => '6');
 		"PARENT_SECTION_CODE" => "",
 		"PREVIEW_TRUNCATE_LEN" => "",
 		"PROPERTY_CODE" => array(
-			0 => "",
+			0 => "PRICE",
 			1 => "",
 		),
 		"SET_BROWSER_TITLE" => "Y",
@@ -104,7 +104,13 @@ $arrFilter = array('PROPERTY_PREFERRED_DEAL' => '6');
 		"SORT_ORDER1" => "DESC",
 		"SORT_ORDER2" => "ASC",
 		"STRICT_SECTION_CHECK" => "N",
-		"COMPONENT_TEMPLATE" => ".default"
+		"COMPONENT_TEMPLATE" => "template1",
+		"TEMPLATE_THEME" => "blue",
+		"MEDIA_PROPERTY" => "",
+		"SLIDER_PROPERTY" => "",
+		"SEARCH_PAGE" => "/search/",
+		"USE_RATING" => "N",
+		"USE_SHARE" => "N"
 	),
 	false
 );?>
@@ -352,27 +358,37 @@ $arrFilter = array('PROPERTY_PREFERRED_DEAL' => '6');
 		</div>
 	</div>
 </div>
-<?$APPLICATION->IncludeComponent(
-	"bitrix:news.line", 
-	".default", 
-	array(
-		"ACTIVE_DATE_FORMAT" => "d.m.Y",
-		"CACHE_GROUPS" => "Y",
-		"CACHE_TIME" => "300",
-		"CACHE_TYPE" => "A",
-		"DETAIL_URL" => "#SITE_DIR#/obyavleniya/#ELEMENT_CODE#/",
-		"FIELD_CODE" => array(
-			0 => "",
-			1 => "",
-		),
-		"IBLOCKS" => array(
-		),
-		"IBLOCK_TYPE" => "ads",
-		"NEWS_COUNT" => "9",
-		"SORT_BY1" => "ACTIVE_FROM",
-		"SORT_BY2" => "SORT",
-		"SORT_ORDER1" => "DESC",
-		"SORT_ORDER2" => "ASC",
+<?$APPLICATION->IncludeComponent("bitrix:news.line", "template1", Array(
+	"ACTIVE_DATE_FORMAT" => "d.m.Y",	// Формат показа даты
+		"CACHE_GROUPS" => "Y",	// Учитывать права доступа
+		"CACHE_TIME" => "300",	// Время кеширования (сек.)
+		"CACHE_TYPE" => "A",	// Тип кеширования
+		"DETAIL_URL" => "#SITE_DIR#/obyavleniya/#ELEMENT_CODE#/",	// URL, ведущий на страницу с содержимым элемента раздела
+		"FIELD_CODE" => array(	// Поля
+			0 => "PROPERTY_TOTAL_AREA",
+			1 => "PROPERTY_PRICE",
+            2 => "PREVIEW_PICTURE",
+            3 => "PROPERTY_NUMBER_OF_BATHROOMS",
+            4 => "PROPERTY_AVAILABILITY_OF_A_GARAGE",
+            5 => "PROPERTY_NUMBERS_OF_FLOORS",
+            6 => "PROPERTY_PREFERRED_DEAL",
+        ),
+        "PROPERTY_CODE" => array(
+            0 => "TOTAL_AREA",
+            1 => "PRICE",
+            2 => "PICTURE",
+            3 => "NUMBER_OF_BATHROOMS",
+            4 => "AVAILABILITY_OF_A_GARAGE",
+            5 => "NUMBERS_OF_FLOORS",
+            6 => "PREFERRED_DEAL",
+        ),
+		"IBLOCKS" => "",	// Код информационного блока
+		"IBLOCK_TYPE" => "ads",	// Тип информационного блока
+		"NEWS_COUNT" => "9",	// Количество новостей на странице
+		"SORT_BY1" => "ACTIVE_FROM",	// Поле для первой сортировки новостей
+		"SORT_BY2" => "SORT",	// Поле для второй сортировки новостей
+		"SORT_ORDER1" => "DESC",	// Направление для первой сортировки новостей
+		"SORT_ORDER2" => "ASC",	// Направление для второй сортировки новостей
 		"COMPONENT_TEMPLATE" => ".default"
 	),
 	false
@@ -440,16 +456,17 @@ $arrFilter = array('PROPERTY_PREFERRED_DEAL' => '6');
 </div>
 <?$APPLICATION->IncludeComponent(
 	"bitrix:news.line", 
-	".default", 
+	"template3", 
 	array(
 		"ACTIVE_DATE_FORMAT" => "d.m.Y",
 		"CACHE_GROUPS" => "Y",
 		"CACHE_TIME" => "300",
-		"CACHE_TYPE" => "N",
+		"CACHE_TYPE" => "A",
 		"DETAIL_URL" => "#ID#",
 		"FIELD_CODE" => array(
 			0 => "",
-			1 => "",
+			1 => "PROPERTY_LINK",
+			2 => "",
 		),
 		"IBLOCKS" => array(
 		),
@@ -459,7 +476,7 @@ $arrFilter = array('PROPERTY_PREFERRED_DEAL' => '6');
 		"SORT_BY2" => "SORT",
 		"SORT_ORDER1" => "DESC",
 		"SORT_ORDER2" => "ASC",
-		"COMPONENT_TEMPLATE" => ".default"
+		"COMPONENT_TEMPLATE" => "template3"
 	),
 	false
 );?>
@@ -506,28 +523,25 @@ $arrFilter = array('PROPERTY_PREFERRED_DEAL' => '6');
 		</div>
 	</div>
 </div>
-<?$APPLICATION->IncludeComponent(
-	"bitrix:news.line", 
-	".default", 
-	array(
-		"ACTIVE_DATE_FORMAT" => "d.m.Y",
-		"CACHE_GROUPS" => "Y",
-		"CACHE_TIME" => "300",
-		"CACHE_TYPE" => "A",
-		"DETAIL_URL" => "#SITE_DIR#/news/#ELEMENT_CODE#/",
-		"FIELD_CODE" => array(
-			0 => "",
-			1 => "",
+<?$APPLICATION->IncludeComponent("bitrix:news.line", "template4", Array(
+	"ACTIVE_DATE_FORMAT" => "d.m.Y",	// Формат показа даты
+		"CACHE_GROUPS" => "Y",	// Учитывать права доступа
+		"CACHE_TIME" => "300",	// Время кеширования (сек.)
+		"CACHE_TYPE" => "A",	// Тип кеширования
+		"DETAIL_URL" => "#SITE_DIR#/news/#ELEMENT_CODE#/",	// URL, ведущий на страницу с содержимым элемента раздела
+		"FIELD_CODE" => array(	// Поля
+			0 => "PREVIEW_TEXT",
+			1 => "PREVIEW_PICTURE",
 		),
-		"IBLOCKS" => array(
+		"IBLOCKS" => array(	// Код информационного блока
 			0 => "1",
 		),
-		"IBLOCK_TYPE" => "news",
-		"NEWS_COUNT" => "3",
-		"SORT_BY1" => "ACTIVE_FROM",
-		"SORT_BY2" => "SORT",
-		"SORT_ORDER1" => "DESC",
-		"SORT_ORDER2" => "ASC",
+		"IBLOCK_TYPE" => "news",	// Тип информационного блока
+		"NEWS_COUNT" => "3",	// Количество новостей на странице
+		"SORT_BY1" => "ACTIVE_FROM",	// Поле для первой сортировки новостей
+		"SORT_BY2" => "SORT",	// Поле для второй сортировки новостей
+		"SORT_ORDER1" => "DESC",	// Направление для первой сортировки новостей
+		"SORT_ORDER2" => "ASC",	// Направление для второй сортировки новостей
 		"COMPONENT_TEMPLATE" => ".default"
 	),
 	false

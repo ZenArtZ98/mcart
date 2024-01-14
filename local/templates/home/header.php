@@ -129,21 +129,24 @@ IncludeTemplateLangFile(__FILE__);
           <div class="col-4 col-md-4 col-lg-8">
             <nav class="site-navigation text-right text-md-right" role="navigation">
                 <?$APPLICATION->IncludeComponent(
-                    "bitrix:menu",
-                    "",
-                    Array(
-                        "ALLOW_MULTI_SELECT" => "N",
-                        "CHILD_MENU_TYPE" => "left",
-                        "DELAY" => "N",
-                        "MAX_LEVEL" => "1",
-                        "MENU_CACHE_GET_VARS" => array(""),
-                        "MENU_CACHE_TIME" => "3600",
-                        "MENU_CACHE_TYPE" => "N",
-                        "MENU_CACHE_USE_GROUPS" => "Y",
-                        "ROOT_MENU_TYPE" => "top",
-                        "USE_EXT" => "N"
-                    )
-                );?>
+	"bitrix:menu", 
+	"template1", 
+	array(
+		"ALLOW_MULTI_SELECT" => "N",
+		"CHILD_MENU_TYPE" => "left",
+		"DELAY" => "N",
+		"MAX_LEVEL" => "1",
+		"MENU_CACHE_GET_VARS" => array(
+		),
+		"MENU_CACHE_TIME" => "3600",
+		"MENU_CACHE_TYPE" => "A",
+		"MENU_CACHE_USE_GROUPS" => "Y",
+		"ROOT_MENU_TYPE" => "top",
+		"USE_EXT" => "N",
+		"COMPONENT_TEMPLATE" => "template1"
+	),
+	false
+);?>
 
               <div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3"><a href="#"
                   class="site-menu-toggle js-menu-toggle text-black"><span class="icon-menu h3"></span></a></div>
