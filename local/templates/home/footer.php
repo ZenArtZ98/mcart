@@ -8,14 +8,17 @@ if(! defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
         <div class="col-lg-4">
           <div class="mb-5">
               <?$APPLICATION->IncludeComponent(
-                  "bitrix:main.include",
-                  "",
-                  Array(
-                      "AREA_FILE_SHOW" => "page",
-                      "AREA_FILE_SUFFIX" => "about",
-                      "EDIT_TEMPLATE" => ""
-                  )
-              );?>
+	"bitrix:main.include", 
+	".default", 
+	array(
+		"AREA_FILE_SHOW" => "file",
+		"AREA_FILE_SUFFIX" => "about",
+		"EDIT_TEMPLATE" => "",
+		"COMPONENT_TEMPLATE" => ".default",
+		"PATH" => "/index_about.php"
+	),
+	false
+);?>
           </div>
 
 
@@ -44,14 +47,17 @@ if(! defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 
         <div class="col-lg-4 mb-5 mb-lg-0">
             <?$APPLICATION->IncludeComponent(
-                "bitrix:main.include",
-                "",
-                Array(
-                    "AREA_FILE_SHOW" => "page",
-                    "AREA_FILE_SUFFIX" => "follow",
-                    "EDIT_TEMPLATE" => ""
-                )
-            );?>
+	"bitrix:main.include", 
+	".default", 
+	array(
+		"AREA_FILE_SHOW" => "file",
+		"AREA_FILE_SUFFIX" => "follow",
+		"EDIT_TEMPLATE" => "",
+		"COMPONENT_TEMPLATE" => ".default",
+		"PATH" => "/index_follow.php"
+	),
+	false
+);?>
 
 
 
@@ -62,14 +68,17 @@ if(! defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
       <div class="row pt-5 mt-5 text-center">
         <div class="col-md-12">
             <?$APPLICATION->IncludeComponent(
-                "bitrix:main.include",
-                "",
-                Array(
-                    "AREA_FILE_SHOW" => "page",
-                    "AREA_FILE_SUFFIX" => "copyright",
-                    "EDIT_TEMPLATE" => ""
-                )
-            );?>
+	"bitrix:main.include", 
+	".default", 
+	array(
+		"AREA_FILE_SHOW" => "file",
+		"AREA_FILE_SUFFIX" => "copyright",
+		"EDIT_TEMPLATE" => "",
+		"COMPONENT_TEMPLATE" => ".default",
+		"PATH" => "/index_copyright.php"
+	),
+	false
+);?>
 
         </div>
 

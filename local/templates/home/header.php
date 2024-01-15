@@ -78,35 +78,46 @@ IncludeTemplateLangFile(__FILE__);
           <div class="col-6 col-md-6">
             <p class="mb-0">
               <a href="#" class="mr-3"><?$APPLICATION->IncludeComponent(
-                      "bitrix:main.include",
-                      "",
-                      Array(
-                          "AREA_FILE_SHOW" => "page",
-                          "AREA_FILE_SUFFIX" => "phone_number",
-                          "EDIT_TEMPLATE" => ""
-                      )
-                  );?></a>
+	"bitrix:main.include", 
+	".default", 
+	array(
+		"AREA_FILE_SHOW" => "file",
+		"AREA_FILE_SUFFIX" => "phone_number",
+		"EDIT_TEMPLATE" => "",
+		"COMPONENT_TEMPLATE" => ".default",
+		"AREA_FILE_RECURSIVE" => "Y",
+		"PATH" => "/index_phone_number.php"
+	),
+	false
+);?></a>
               <a href="#"><?$APPLICATION->IncludeComponent(
-                      "bitrix:main.include",
-                      "",
-                      Array(
-                          "AREA_FILE_SHOW" => "page",
-                          "AREA_FILE_SUFFIX" => "email",
-                          "EDIT_TEMPLATE" => ""
-                      )
-                  );?></a>
+	"bitrix:main.include", 
+	".default", 
+	array(
+		"AREA_FILE_SHOW" => "file",
+		"AREA_FILE_SUFFIX" => "email",
+		"EDIT_TEMPLATE" => "",
+		"COMPONENT_TEMPLATE" => ".default",
+		"PATH" => "/index_email.php"
+	),
+	false
+);?></a>
             </p>
           </div>
           <div class="col-6 col-md-6 text-right">
               <a href="#"><?$APPLICATION->IncludeComponent(
-                      "bitrix:main.include",
-                      "",
-                      Array(
-                          "AREA_FILE_SHOW" => "page",
-                          "AREA_FILE_SUFFIX" => "links",
-                          "EDIT_TEMPLATE" => ""
-                      )
-                  );?></a>
+	"bitrix:main.include", 
+	".default", 
+	array(
+		"AREA_FILE_SHOW" => "file",
+		"AREA_FILE_SUFFIX" => "links",
+		"EDIT_TEMPLATE" => "",
+		"COMPONENT_TEMPLATE" => ".default",
+		"AREA_FILE_RECURSIVE" => "Y",
+		"PATH" => "/index_links.php"
+	),
+	false
+);?></a>
           </div>
         </div>
       </div>
@@ -117,14 +128,17 @@ IncludeTemplateLangFile(__FILE__);
         <div class="row align-items-center">
           <div class="col-8 col-md-8 col-lg-4">
             <h1 class=""><?$APPLICATION->IncludeComponent(
-                    "bitrix:main.include",
-                    "",
-                    Array(
-                        "AREA_FILE_SHOW" => "page",
-                        "AREA_FILE_SUFFIX" => "home",
-                        "EDIT_TEMPLATE" => ""
-                    )
-                );?></h1>
+	"bitrix:main.include", 
+	".default", 
+	array(
+		"AREA_FILE_SHOW" => "file",
+		"AREA_FILE_SUFFIX" => "home",
+		"EDIT_TEMPLATE" => "",
+		"COMPONENT_TEMPLATE" => ".default",
+		"PATH" => "/index_home.php"
+	),
+	false
+);?></h1>
           </div>
           <div class="col-4 col-md-4 col-lg-8">
             <nav class="site-navigation text-right text-md-right" role="navigation">
@@ -153,6 +167,7 @@ IncludeTemplateLangFile(__FILE__);
 
 
             </nav>
+
           </div>
 
 
@@ -160,3 +175,15 @@ IncludeTemplateLangFile(__FILE__);
       </div>
     </div>
   </div>
+<?php if (CSite::InDir('/index.php')): ?>
+
+<?php else: ?>
+    <?php $APPLICATION->IncludeComponent("bitrix:breadcrumb", "template1", Array(
+        "START_FROM" => "0",
+        "PATH" => "",
+        "SITE_ID" => "s1",
+        "COMPONENT_TEMPLATE" => ".default"
+    ),
+        false
+    );?>
+<?php endif; ?>
