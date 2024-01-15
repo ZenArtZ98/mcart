@@ -8,7 +8,7 @@ $arUrlRewrite=array (
     'PATH' => '/about_the_service/news/index.php',
     'SORT' => 100,
   ),
-  3 => 
+  7 => 
   array (
     'CONDITION' => '#^/obyavleniya/#',
     'RULE' => '',
