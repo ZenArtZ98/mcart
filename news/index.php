@@ -74,4 +74,16 @@ $APPLICATION->SetTitle("Новости");
 		"USE_SEARCH" => "N",
 		"YANDEX" => "N"
 	)
+);?><?$APPLICATION->IncludeComponent(
+	"mcart:mcart.iblockelement.like", 
+	".default", 
+	array(
+		"CACHE_TIME" => "86400",
+		"CACHE_TYPE" => "A",
+		"ELEMENT_ID" => "42",
+		"IBLOCK_ID" => "8",
+		"IBLOCK_TYPE" => "news",
+		"COMPONENT_TEMPLATE" => ".default"
+	),
+	false
 );?><?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
