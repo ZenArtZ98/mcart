@@ -2,7 +2,7 @@
 $aMenuLinks = Array(
 	Array(
 		"Избранное", 
-		"/buyers personal account/favorites", 
+		"/buyers personal account/favorites/", 
 		Array(), 
 		Array(), 
 		"" 
