@@ -59,7 +59,7 @@ IncludeTemplateLangFile(__FILE__);
 <div id="panel">
     <? $APPLICATION->ShowPanel(); ?>
 </div>
-  <div class="site-loader"></div>
+<!--  <div class="site-loader"></div>-->
 
   <div class="site-wrap">
 
@@ -175,15 +175,16 @@ IncludeTemplateLangFile(__FILE__);
       </div>
     </div>
   </div>
-<?php if (CSite::InDir('/index.php')): ?>
-
-<?php else: ?>
-    <?php $APPLICATION->IncludeComponent("bitrix:breadcrumb", "template1", Array(
-        "START_FROM" => "0",
-        "PATH" => "",
-        "SITE_ID" => "s1",
-        "COMPONENT_TEMPLATE" => ".default"
-    ),
+<?php if ($APPLICATION->GetCurPage() != '/'): ?>
+    <?php $APPLICATION->IncludeComponent(
+        "bitrix:breadcrumb",
+        "template1",
+        array(
+            "START_FROM" => "0",
+            "PATH" => "",
+            "SITE_ID" => "s1",
+            "COMPONENT_TEMPLATE" => "template1"
+        ),
         false
     );?>
 <?php endif; ?>

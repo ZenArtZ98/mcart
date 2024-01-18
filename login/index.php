@@ -1,18 +1,14 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
-?>
-
- <?$APPLICATION->IncludeComponent(
-	"bitrix:system.auth.form", 
-	"template1", 
-	array(
+$APPLICATION->SetTitle("Личный кабинет");
+?><?$APPLICATION->IncludeComponent(
+	"bitrix:system.auth.form",
+	"template1",
+	Array(
 		"COMPONENT_TEMPLATE" => "template1",
-		"REGISTER_URL" => "/login/registration.php",
 		"FORGOT_PASSWORD_URL" => "",
 		"PROFILE_URL" => "",
+		"REGISTER_URL" => "/login/registration.php",
 		"SHOW_ERRORS" => "N"
-	),
-	false
-);?>
-
-<?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
+	)
+);?><?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>

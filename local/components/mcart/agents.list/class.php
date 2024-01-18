@@ -93,10 +93,20 @@ class AgentsList extends CBitrixComponent implements Controllerable, Errorable
             );
         }
 
+        // Проверка и установка дефолтного значения для "Время кеширования"
+        if (!isset($arParams["CACHE_TIME"]) || !is_numeric($arParams["CACHE_TIME"])) {
+            $arParams["CACHE_TIME"] = 36000000; // устанавливаем дефолтное значение
+        }
+
+        // Проверка и установка дефолтного значения для "Количество элементов"
+        if (!isset($arParams["ELEMENTS_COUNT"]) || !is_numeric($arParams["ELEMENTS_COUNT"])) {
+            $arParams["ELEMENTS_COUNT"] = 10; // устанавливаем дефолтное значение
+        }
 
         /*
          * Нужно проверить, что заданы значения в $arParams "Время кеширования" и "Количество элементов"
          * Если не заданы, то указать дефолтные значения
+         * ВЫПОЛНЕНО
          */
 
 
@@ -117,6 +127,9 @@ class AgentsList extends CBitrixComponent implements Controllerable, Errorable
     final public function executeComponent(): void
     {
         if (empty($this->arParams["HLBLOCK_TNAME"])) {
+            $this->addError(
+                new Error(Loc::getMessage('MCART_AGENTS_LIST_NOT_HLBLOCK_TNAME'), 404)
+            );
             /**
              * Если параметр Название таблицы (TABLE_NAME) Highload-блока не задан,
              * нужно отдать ошибку (Loc::getMessage('MCART_AGENTS_LIST_NOT_HLBLOCK_TNAME')).
@@ -145,7 +158,7 @@ class AgentsList extends CBitrixComponent implements Controllerable, Errorable
             $this->taggedCache->registerTag('hlblock_table_name_' . $arHlblock['TABLE_NAME']); // Регистрируем кещ, чтобы по нему на событиях добавление/изменение/удаление элементов хлблока сбрасывать кеш компонента
 
             $entity = self::getEntityDataClassById($arHlblock); // получить класс для работы с хлблоком
-            $arTypeAgents = self::getFieldListValue($arHlblock, 'UF_TYPE'); // получить массив со значениями списочного свойства Виды деятельности агентов
+            $arTypeAgents = self::getFieldListValue($arHlblock, 'UF_KIND_OF_ACTIVITY'); // получить массив со значениями списочного свойства Виды деятельности агентов
             $this->arResult['AGENTS'] = $this->getAgents($entity, $arTypeAgents); // получить массив со списком агентов и объектом для пагинации
 
 
@@ -161,8 +174,12 @@ class AgentsList extends CBitrixComponent implements Controllerable, Errorable
         /*
          * Получить Избранных агентов для текущего пользователя записать их в массив $this->arResult['STAR_AGENTS']
          * Это можно зделать с помощью CUserOptions::GetOption
-         */ 
-         $this->arResult['STAR_AGENTS'] = CUserOptions::GetOption($category, $name);
+         */
+        $userId = $GLOBALS['USER']->GetID();
+        $category = 'mcart_agent';
+        $name = 'options_agents_star';
+
+        $this->arResult['STAR_AGENTS'] = CUserOptions::GetOption($category, $name, [], $userId);
         /*
          * Данного метода нет в документации, код метода и его параметры можно найти в ядре (/bitrix/modules/main/) или в гугле
          * $category - это категория настройки, можете придумать любую, например mcart_agent
@@ -190,9 +207,7 @@ class AgentsList extends CBitrixComponent implements Controllerable, Errorable
          * https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=43&LESSON_ID=5753
          */
         $result = HighloadBlockTable::getList([
-            'filter' => [
-                // Указать фильтр по полю "TABLE_NAME"
-            ], 
+            'filter' => ['=TABLE_NAME' => $hl_block_name],
         ]);
 
         if ($row = $result->fetch()) { // Получим результат запросв
@@ -215,12 +230,12 @@ class AgentsList extends CBitrixComponent implements Controllerable, Errorable
             return '';
         }
 
-        /*
-         * Написать запрос для получения класса хлблока (нужно использовать getDataClass())
-         * https://tichiy.ru/wiki/rabota-s-highload-blokami-bitriks-cherez-api-d7/
-         */
-
-        return '';
+        try {
+            $hlblock = HighloadBlockTable::compileEntity($arHlblock);
+            return $hlblock->getDataClass();
+        } catch (\Exception $e) {
+            return '';
+        }
     }
 
     /**
@@ -242,9 +257,11 @@ class AgentsList extends CBitrixComponent implements Controllerable, Errorable
         ])->Fetch()["ID"];
 
         if ($fieldID) {
-            /*
-             *  Получить список свойств для $fieldID используя класс CUserFieldEnum
-             */
+            $enum = new \CUserFieldEnum();
+            $enumList = $enum->GetList([], ["USER_FIELD_ID" => $fieldID]);
+            while($enumValue = $enumList->Fetch()) {
+                $result[$enumValue["ID"]] = $enumValue["VALUE"];
+            }
         }
 
         return $result;
@@ -263,14 +280,23 @@ class AgentsList extends CBitrixComponent implements Controllerable, Errorable
             'ITEMS' => [], // список агентов
         ];
 
+
         // Объек для для пагинации, подробнее можно почитать 
         $nav = new \Bitrix\Main\UI\PageNavigation("nav-agents");
         $nav->allowAllRecords(true)
-            ->setPageSize($this->arParams['']) //Нужно передать параметр Количество элементов из мввсива $this->arParams
-            ->initFromUri();
+            ->setPageSize($this->arParams['ELEMENTS_COUNT']); //Нужно передать параметр Количество элементов из мввсива $this->arParams
+
+        $currentPage = $_REQUEST['PAGEN_' . $nav->getId()] ?? 1;
+        $nav->setCurrentPage($currentPage);
+        $nav->initFromUri();
 
         
         $rsAgents = $entity::GetList([
+            'select' => ['*'], // Укажите необходимые поля
+            'filter' => ['=UF_ACTIVITY' => '1'],
+            'limit' => $nav->getLimit(),
+            'offset' => $nav->getOffset(),
+            'count_total' => true,
             /*
              * С помощью GetList запросить список "Активных" агентов,
              * в запросе ограничить количество агентов (использовать объект для пагинации) 
@@ -279,6 +305,15 @@ class AgentsList extends CBitrixComponent implements Controllerable, Errorable
         ]);
     
         while ($arAgent = $rsAgents->fetch()) {
+            // Преобразование значений полей, например, для Вида деятельности и Фото
+            if (!empty($arAgent['UF_KIND_OF_ACTIVITY']) && isset($arTypeAgents[$arAgent['UF_KIND_OF_ACTIVITY']])) {
+                $arAgent['UF_KIND_OF_ACTIVITY_VALUE'] = $arTypeAgents[$arAgent['UF_KIND_OF_ACTIVITY']];
+            } else {
+                $arAgent['UF_KIND_OF_ACTIVITY_VALUE'] = 'Не указано';
+            }
+            if (!empty($arAgent['UF_PHOTO'])) {
+                $arAgent['UF_PHOTO_SRC'] = \CFile::GetPath($arAgent['UF_PHOTO']);
+            }
             /**
              * Обработает полученный массив
              * 
@@ -326,9 +361,27 @@ class AgentsList extends CBitrixComponent implements Controllerable, Errorable
      */
     public function clickStarAction($agentID)
     {
-        $result = []; // ответ, который уйдет на фронт
+        $userId = $GLOBALS['USER']->GetID();
+        $category = 'mcart_agent';
+        $name = 'options_agents_star';
 
-        $value = []; // массив ID элементов, которые пользователь добавил в избраное
+        $currentValue = CUserOptions::GetOption($category, $name, [], $userId);
+        if (!is_array($currentValue)) {
+            $currentValue = [];
+        }
+
+        if (in_array($agentID, $currentValue)) {
+            $currentValue = array_diff($currentValue, [$agentID]);
+        } else {
+            $currentValue[] = $agentID;
+        }
+
+        CUserOptions::SetOption($category, $name, $currentValue, false, $userId);
+
+        $result['action'] = 'success';
+        return $result;
+
+        // массив ID элементов, которые пользователь добавил в избраное
         /*
          * 1. Получить значения свойства из настроек пользователя (CUserOptions) для текущего пользователя
          * https://dev.1c-bitrix.ru/community/webdev/user/259944/blog/17105/
@@ -345,6 +398,5 @@ class AgentsList extends CBitrixComponent implements Controllerable, Errorable
          */
 
 
-        return $result;
     }
 }
