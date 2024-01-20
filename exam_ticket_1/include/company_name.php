@@ -1,0 +1,1 @@
+<img src="/exam_ticket_1/include/bx_default_logo.gif" alt="" />

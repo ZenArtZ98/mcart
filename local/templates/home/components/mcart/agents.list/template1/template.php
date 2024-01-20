@@ -16,9 +16,9 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) {
 /** @var CBitrixComponent $component */
 $this->setFrameMode(true);
 
-echo '<pre>';
-print_r($arResult); // для разработки в конечном коде убрать
-echo '</pre>';
+//echo '<pre>';
+//print_r($arResult); // для разработки в конечном коде убрать
+//echo '</pre>';
 
 use Bitrix\Main\Page\Asset;
 

@@ -8,6 +8,38 @@ $arUrlRewrite=array (
     'PATH' => '/about_the_service/news/index.php',
     'SORT' => 100,
   ),
+  10 => 
+  array (
+    'CONDITION' => '#^/exam_ticket_1/services/#',
+    'RULE' => '',
+    'ID' => 'bitrix:catalog',
+    'PATH' => '/exam_ticket_1/services/index.php',
+    'SORT' => 100,
+  ),
+  13 => 
+  array (
+    'CONDITION' => '#^/exam_ticket_1/products/#',
+    'RULE' => '',
+    'ID' => 'bitrix:catalog',
+    'PATH' => '/exam_ticket_1/products/index.php',
+    'SORT' => 100,
+  ),
+  14 => 
+  array (
+    'CONDITION' => '#^/exam_ticket_1/Reviews/#',
+    'RULE' => '',
+    'ID' => 'bitrix:news',
+    'PATH' => '/exam_ticket_1/Reviews/index.php',
+    'SORT' => 100,
+  ),
+  12 => 
+  array (
+    'CONDITION' => '#^/exam_ticket_1/news/#',
+    'RULE' => '',
+    'ID' => 'bitrix:news',
+    'PATH' => '/exam_ticket_1/news/index.php',
+    'SORT' => 100,
+  ),
   9 => 
   array (
     'CONDITION' => '#^/obyavleniya/#',
