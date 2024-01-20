@@ -204,12 +204,23 @@ IncludeTemplateLangFile(__FILE__);
 	false
 );?>
 <?php if ($APPLICATION->GetCurPage() != '/exam_ticket_1/'): ?>
-    <div class="breadcrumbs-box">
-            <div class="inner-wrap">
-                <a href="">Главная</a>
-                <a href="">Мебель</a>
-                <span>Выставки и события</span>
-            </div>
-        </div>
+<?php $APPLICATION->IncludeComponent(
+	"bitrix:breadcrumb", 
+	"template1", 
+	array(
+		"START_FROM" => "0",
+		"PATH" => "",
+		"SITE_ID" => "12",
+		"COMPONENT_TEMPLATE" => "template1"
+	),
+	false
+);?>
+<!--    <div class="breadcrumbs-box">-->
+<!--            <div class="inner-wrap">-->
+<!--                <a href="">Главная</a>-->
+<!--                <a href="">Мебель</a>-->
+<!--                <span>Выставки и события</span>-->
+<!--            </div>-->
+<!--        </div>-->
 <?php endif; ?>
 

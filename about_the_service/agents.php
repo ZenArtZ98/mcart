@@ -7,7 +7,7 @@ $APPLICATION->SetTitle("Агенты");
 	array(
 		"CACHE_TIME" => "36000000",
 		"CACHE_TYPE" => "A",
-		"ELEMENTS_COUNT" => "3",
+		"ELEMENTS_COUNT" => "1",
 		"HLBLOCK_TNAME" => "Agents",
 		"TABLE_NAME" => "Agents",
 		"COMPONENT_TEMPLATE" => "template1"
