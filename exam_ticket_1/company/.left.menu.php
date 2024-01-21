@@ -34,6 +34,13 @@ $aMenuLinks = Array(
 		Array(), 
 		Array(), 
 		"" 
+	),
+	Array(
+		"Обратная связь", 
+		"/exam_ticket_1/company/feedback.php", 
+		Array(), 
+		Array(), 
+		"" 
 	)
 );
 ?>

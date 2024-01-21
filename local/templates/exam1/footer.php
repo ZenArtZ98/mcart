@@ -6,14 +6,25 @@ if(! defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
         <nav class="main-menu">
             <div class="item">
                 <div class="title-block">О магазине</div>
-                <ul>
-                    <li><a href="">Отзывы</a>
-                    </li>
-                    <li><a href="">Руководство </a>
-                    </li>
-                    <li><a href="">История</a>
-                    </li>
-                </ul>
+                <?$APPLICATION->IncludeComponent(
+	"bitrix:menu", 
+	".default", 
+	array(
+		"ALLOW_MULTI_SELECT" => "N",
+		"CHILD_MENU_TYPE" => "left",
+		"DELAY" => "N",
+		"MAX_LEVEL" => "1",
+		"MENU_CACHE_GET_VARS" => array(
+		),
+		"MENU_CACHE_TIME" => "3600",
+		"MENU_CACHE_TYPE" => "N",
+		"MENU_CACHE_USE_GROUPS" => "Y",
+		"ROOT_MENU_TYPE" => "bottom",
+		"USE_EXT" => "N",
+		"COMPONENT_TEMPLATE" => ".default"
+	),
+	false
+);?>
             </div>
             <div class="item">
                 <div class="title-block">Каталог товаров</div>
@@ -45,7 +56,18 @@ if(! defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
             <div class="title-block"><?=GetMessage('CONTACT_INFO')?></div>
             <div class="loc-block">
                 <div class="address">ул. Летняя, стр.12, офис 512</div>
-                <div class="phone"><a href="tel:84952128506">8 (495) 212-85-06</a>
+                <div class="phone"><a href=""><?$APPLICATION->IncludeComponent(
+	"bitrix:main.include", 
+	".default", 
+	array(
+		"COMPONENT_TEMPLATE" => ".default",
+		"AREA_FILE_SHOW" => "file",
+		"AREA_FILE_SUFFIX" => "tele",
+		"EDIT_TEMPLATE" => "",
+		"PATH" => "/exam_ticket_1/index_tele.php"
+	),
+	false
+);?></a>
                 </div>
             </div>
             <div class="main-soc-block">
